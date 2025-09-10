@@ -17,6 +17,9 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+OPENAI_API_KEY = 'sk-ваш-ключ-здесь'  # Замени на настоящий
+TELEGRAM_BOT_TOKEN = '8493795627:AAHy_gdXtI1ekcYtN64Ydj9SXnQ0UbFa1vQ'  # Твой токен от BotFather
 
 if __name__ == '__main__':
     main()
+
