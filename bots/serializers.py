@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from scenarios.models import Scenario # Сам добавил                  !!!!!!!
 from .models import Bot
 from scenarios.serializers import ScenarioSerializer
 
