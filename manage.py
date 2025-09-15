@@ -1,22 +1,30 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
 import os
+import django
+from django.core.management import execute_from_command_line
 import sys
 
 
-def main():
-    """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Alpina_GPT.settings')
-    try:
-        from django.core.management import execute_from_command_line
-    except ImportError as exc:
-        raise ImportError(
-            "Couldn't import Django. Are you sure it's installed and "
-            "available on your PYTHONPATH environment variable? Did you "
-            "forget to activate a virtual environment?"
-        ) from exc
-    execute_from_command_line(sys.argv)
-
-
 if __name__ == '__main__':
-    main()
+    # Устанавливаем переменную окружения для настроек Django
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Alpina_GPT.settings')
+
+    # Запускаем настройку Django ДО любых импортов моделей
+    django.setup()
+
+    # Теперь можно обрабатывать команды
+    if len(sys.argv) > 1:
+        command = sys.argv[1]
+
+        # Если команда — runbot, запускаем Telegram-бота
+        if command == 'runbot':
+            try:
+                from bots.telegram_bot import run_telegram_bot
+                run_telegram_bot()
+            except Exception as e:
+                print(f"Ошибка при запуске бота: {e}")
+                raise
+            sys.exit(0)
+
+    # Все остальные команды (runserver, migrate и т.д.)
+    execute_from_command_line(sys.argv)
